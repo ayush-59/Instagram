@@ -1,41 +1,41 @@
 /* eslint-disable no-plusplus */
-// NOTE: replace 'NvPY9M9MzFTARQ6M816YAzDJxZ72' with your Firebase auth user id (can be taken from Firebase)
+// NOTE: replace 'AFWXkxxGnaatTRFwR72jeFW5cZ83' with your Firebase auth user id (can be taken from Firebase)
 export function seedDatabase(firebase) {
   const users = [
     {
-      userId: "NvPY9M9MzFTARQ6M816YAzDJxZ72",
-      username: "karl",
-      fullName: "Karl Hadwen",
-      emailAddress: "karlhadwen@gmail.com",
+      userId: "AFWXkxxGnaatTRFwR72jeFW5cZ83",
+      username: "Ayush",
+      fullName: "Ayush Singh",
+      emailAddress: "AyushSingh@gmail.com",
       following: ["2"],
       followers: ["2", "3", "4"],
       dateCreated: Date.now(),
     },
     {
       userId: "2",
-      username: "raphael",
-      fullName: "Raffaello Sanzio da Urbino",
-      emailAddress: "raphael@sanzio.com",
+      username: "Dipali",
+      fullName: "Dipali Mankotia",
+      emailAddress: "dipali@yahoo.com",
       following: [],
-      followers: ["NvPY9M9MzFTARQ6M816YAzDJxZ72"],
+      followers: ["AFWXkxxGnaatTRFwR72jeFW5cZ83"],
       dateCreated: Date.now(),
     },
     {
       userId: "3",
-      username: "dali",
-      fullName: "Salvador Dalí",
-      emailAddress: "salvador@dali.com",
+      username: "Abhishek",
+      fullName: "Abhishek Maggo",
+      emailAddress: "abhishek@maggo.com",
       following: [],
-      followers: ["NvPY9M9MzFTARQ6M816YAzDJxZ72"],
+      followers: ["AFWXkxxGnaatTRFwR72jeFW5cZ83"],
       dateCreated: Date.now(),
     },
     {
       userId: "4",
-      username: "orwell",
-      fullName: "George Orwell",
-      emailAddress: "george@orwell.com",
+      username: "Chinki",
+      fullName: "Chinki",
+      emailAddress: "chinki@gmail.com",
       following: [],
-      followers: ["NvPY9M9MzFTARQ6M816YAzDJxZ72"],
+      followers: ["AFWXkxxGnaatTRFwR72jeFW5cZ83"],
       dateCreated: Date.now(),
     },
   ];
@@ -53,16 +53,16 @@ export function seedDatabase(firebase) {
       .add({
         photoId: i,
         userId: "2",
-        imageSrc: `/images/users/raphael/${i}.jpg`,
+        imageSrc: `/images/users/ayush/${i}.jpg`,
         caption: "Saint George and the Dragon",
         likes: [],
         comments: [
           {
-            displayName: "dali",
+            displayName: "Dipali",
             comment: "Love this place, looks like my animal farm!",
           },
           {
-            displayName: "orwell",
+            displayName: "abhishek",
             comment: "Would you mind if I used this picture?",
           },
         ],
