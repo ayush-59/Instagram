@@ -19,5 +19,5 @@ const { FieldValue } = Firebase.firestore;
 
 //run this command only once
 //seedDatabase(firebase);
-console.log(firebase);
+
 export { firebase, FieldValue };
