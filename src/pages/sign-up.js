@@ -2,29 +2,56 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
+import { doesUsernameExists } from "../services/firebase";
 
-function Login() {
+function SignUp() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const isInvalid = email === "" || password === "";
 
-  const handleLogin = async (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      history.push(ROUTES.DASHBOARD);
-    } catch (error) {
-      setEmail("");
-      setPassword("");
-      setErrors(error.message);
+
+    const usernameExists = await doesUsernameExists(username);
+    if (!usernameExists) {
+      try {
+        const createdUserResult = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password);
+
+        await createdUserResult.user.updateProfile({
+          displayName: username,
+        });
+
+        await firebase.firestore().collection("users").add({
+          userId: createdUserResult.user.uid,
+          username: username,
+          fullName: fullName,
+          following: [],
+          emailAddress: email,
+          dateCreated: Date.now(),
+        });
+        history.push(ROUTES.DASHBOARD);
+      } catch (error) {
+        setUsername("");
+        setFullName("");
+        setEmail("");
+        setPassword("");
+        setErrors(error.message);
+      }
+    } else {
+      setUsername("");
+      setErrors("This username is already taken, please try another");
     }
   };
 
   useEffect(() => {
-    document.title = "Login - Instagram";
+    document.title = "SignUp - Instagram";
   }, []);
 
   return (
@@ -45,7 +72,29 @@ function Login() {
 
           {errors && <p className="mb-4 text-xs text-red-primary">{errors}</p>}
 
-          <form onSubmit={handleLogin} method="POST">
+          <form onSubmit={handleSignUp} method="POST">
+            <input
+              aria-label="Enter your Username"
+              type="text"
+              placeholder="Username"
+              className="text-sm text-gray-base px-5 py-4 mr-3 mb-2 w-full h-2
+              border border-gray-primary rounded"
+              onChange={({ target }) => {
+                setUsername(target.value);
+              }}
+              value={username}
+            />
+            <input
+              aria-label="Enter your Full Name"
+              type="text"
+              placeholder="Full Name"
+              className="text-sm text-gray-base px-5 py-4 mr-3 mb-2 w-full h-2
+              border border-gray-primary rounded"
+              onChange={({ target }) => {
+                setFullName(target.value);
+              }}
+              value={fullName}
+            />
             <input
               aria-label="Enter your email address"
               type="email"
@@ -74,7 +123,7 @@ function Login() {
               className={`w-full bg-blue-medium text-white rounded h-8 font-bold
               ${isInvalid && "opacity-50"}`}
             >
-              Log In
+              Sign Up
             </button>
           </form>
         </div>
@@ -84,9 +133,9 @@ function Login() {
         w-full bg-white p-4 border border-gray-primary"
         >
           <p className="text-sm">
-            Don't have an account?{" "}
-            <Link to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
-              Sign Up
+            Already have an account?{" "}
+            <Link to={ROUTES.LOGIN} className="font-bold text-blue-medium">
+              Log In
             </Link>
           </p>
         </div>
@@ -95,4 +144,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;
