@@ -32,6 +32,7 @@ function SignUp() {
           userId: createdUserResult.user.uid,
           username: username,
           fullName: fullName,
+          followers: [],
           following: [],
           emailAddress: email,
           dateCreated: Date.now(),
