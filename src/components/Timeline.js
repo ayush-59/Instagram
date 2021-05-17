@@ -1,11 +1,21 @@
-import { useContext } from "react";
-import UserContext from "../context/user";
+import usePhotos from "../hooks/use-photos";
+import Skeleton from "react-loading-skeleton";
+import Post from "./post";
 
 export default function Timeline() {
-  const { user } = useContext(UserContext);
+  const { photos } = usePhotos();
+
   return (
-    <div>
-      <p>This is a Timeline </p>
+    <div className="container col-span-3 md:col-span-2">
+      {!photos ? (
+        <Skeleton count={4} width={640} height={500} className="mb-5" />
+      ) : photos.length > 0 ? (
+        photos.map((content) => <Post key={content.docId} content={content} />)
+      ) : (
+        <p className="text-center text-2xl">
+          Follow some users to see their Posts !
+        </p>
+      )}
     </div>
   );
 }

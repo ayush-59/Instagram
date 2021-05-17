@@ -32,6 +32,7 @@ function SignUp() {
           userId: createdUserResult.user.uid,
           username: username,
           fullName: fullName,
+          avatar: "images/avatars/default.png",
           followers: [],
           following: [],
           emailAddress: email,
@@ -81,7 +82,7 @@ function SignUp() {
               className="text-sm text-gray-base px-5 py-4 mr-3 mb-2 w-full h-2
               border border-gray-primary rounded"
               onChange={({ target }) => {
-                setUsername(target.value);
+                setUsername(target.value.toLowerCase());
               }}
               value={username}
             />
@@ -103,7 +104,7 @@ function SignUp() {
               className="text-sm text-gray-base px-5 py-4 mr-3 mb-2 w-full h-2
               border border-gray-primary rounded"
               onChange={({ target }) => {
-                setEmail(target.value);
+                setEmail(target.value.toLowerCase());
               }}
               value={email}
             />
