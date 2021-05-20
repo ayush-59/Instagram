@@ -32,13 +32,15 @@ function SignUp() {
           userId: createdUserResult.user.uid,
           username: username,
           fullName: fullName,
-          avatar: "images/avatars/default.png",
+          avatar: "/images/avatars/default.png",
           followers: [],
           following: [],
           emailAddress: email,
           dateCreated: Date.now(),
         });
-        history.push(ROUTES.DASHBOARD);
+        setTimeout(() => {
+          history.push(ROUTES.DASHBOARD);
+        }, 500);
       } catch (error) {
         setUsername("");
         setFullName("");

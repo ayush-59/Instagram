@@ -16,6 +16,7 @@ export default function AddComment({
   } = useContext(UserContext);
 
   const handleSubmitComment = (event) => {
+    event.preventDefault();
     setComments(() => [...comments, { displayName, comment }]);
     setComment("");
 
@@ -49,12 +50,11 @@ export default function AddComment({
           ref={commentInput}
         />
         <button
-          type="button"
+          type="submit"
           className={`text-sm font-bold text-blue-medium px-5 ${
             !comment && "opacity-25"
           }`}
           disabled={comment.length < 1}
-          onClick={handleSubmitComment}
         >
           POST
         </button>

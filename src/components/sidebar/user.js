@@ -9,7 +9,7 @@ const User = ({ username, fullName, avatar }) =>
   ) : (
     <Link
       to={`/p/${username}`}
-      className="grid grid-cols-4 gap-4 mb-6 items-center"
+      className="sticky top-16 grid grid-cols-4 gap-4 mb-6 items-center"
     >
       <div className="flex items-center justify-center col-span-1">
         <img

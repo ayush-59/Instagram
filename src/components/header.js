@@ -13,7 +13,7 @@ export default function Header() {
   } = useUser();
 
   return (
-    <header className="h-16 bg-white border-b border-gray-primary mb-8">
+    <header className="sticky top-0 h-16 bg-white border-b border-gray-primary mb-8">
       <div className="container max-w-screen-lg mx-auto h-full">
         <div className="flex justify-between h-full">
           <div className="flex align-items text-center items-center cursor-pointer text-gray-700 ">

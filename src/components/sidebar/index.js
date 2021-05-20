@@ -9,12 +9,14 @@ export default function Sidebar() {
 
   return (
     <div className="invisible md:visible">
-      <User username={username} fullName={fullName} avatar={avatar} />
-      <Suggestions
-        userId={userId}
-        following={following}
-        loggedInUserDocId={docId}
-      />
+      <div className="sticky top-24 ">
+        <User username={username} fullName={fullName} avatar={avatar} />
+        <Suggestions
+          userId={userId}
+          following={following}
+          loggedInUserDocId={docId}
+        />
+      </div>
     </div>
   );
 }

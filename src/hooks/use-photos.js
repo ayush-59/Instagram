@@ -1,27 +1,24 @@
-import { useState, useEffect, useContext } from "react";
-import UserContext from "../context/user";
-import { getPhotos, getUserByUserId } from "../services/firebase";
+import { useState, useEffect } from "react";
+import { getPhotos } from "../services/firebase";
 
-export default function usePhotos() {
-  const [photos, setPhotos] = useState(null);
-
-  const { user } = useContext(UserContext);
+export default function usePhotos(user) {
+  const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     async function getTimelinePhotos() {
-      const [{ following }] = await getUserByUserId(user.uid);
-
+      // does the user actually follow people?
       let followedUserPhotos = [];
-      if (following.length > 0) {
-        followedUserPhotos = await getPhotos(user.uid, following);
+      if (user?.following?.length > 0) {
+        followedUserPhotos = await getPhotos(user.userId, user.following);
+        // re-arrange array to be newest photos first by dateCreated
+
+        followedUserPhotos.sort((a, b) => b.dateCreated - a.dateCreated);
+        setPhotos(followedUserPhotos);
       }
-      followedUserPhotos.sort((a, b) => b.dateCreated - a.dateCreated);
-      setPhotos(followedUserPhotos);
     }
-    if (user?.uid) {
-      getTimelinePhotos();
-    }
-  }, [user?.uid]);
+
+    getTimelinePhotos();
+  }, [user?.userId, user?.following]);
 
   return { photos };
 }

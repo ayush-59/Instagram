@@ -7,8 +7,11 @@ export async function doesUsernameExists(username) {
     .where("username", "==", username)
     .get();
 
-  const result = usernameExists.docs.map((user) => user.data().length > 0);
-  return result.length;
+  const result = usernameExists.docs.map((user) => ({
+    ...user.data(),
+    docId: user.id,
+  }));
+  return result.length ? result : false;
 }
 
 //get user from firestore collections where userId(from authentication) == userId(from collections)
@@ -99,3 +102,31 @@ export async function getPhotos(userId, following) {
   );
   return photosWithUserDetails;
 }
+
+export async function getUserPhotosbyUserId(userId) {
+  const result = await firebase
+    .firestore()
+    .collection("photos")
+    .where("userId", "==", userId)
+    .get();
+
+  return result.docs.map((photo) => ({
+    ...photo.data(),
+    docId: photo.id,
+  }));
+}
+/*
+export async function isUserFollowingProfile(userId, profileId) {
+  const result = await firebase
+    .firestore()
+    .collection("users")
+    .where("userId", "==", userId)
+    .where("following", "array-contains", profileId)
+    .get();
+
+  const [response = {}] = result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id(),
+  }));
+}
+*/

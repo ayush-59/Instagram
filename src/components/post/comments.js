@@ -16,7 +16,7 @@ export default function Comments({
   return (
     <>
       <div className="p-4 pt-1 pb-4">
-        {comments.length >= 3 && (
+        {comments.length > 3 && (
           <button
             className="text-sm text-gray-base mb-1 cursor-pointer"
             onClick={() =>

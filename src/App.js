@@ -6,13 +6,14 @@ import useAuthListener from "./hooks/use-auth-listener";
 import ProtectedRoute from "./helpers/protected-route";
 import IsUserLoggedIn from "./helpers/is-user-logged-in";
 
-function App() {
-  const Login = lazy(() => import("./pages/login"));
-  const SignUp = lazy(() => import("./pages/sign-up"));
-  const Dashboard = lazy(() => import("./pages/dashboard"));
-  const NotFound = lazy(() => import("./pages/not-found"));
+const Login = lazy(() => import("./pages/login"));
+const SignUp = lazy(() => import("./pages/sign-up"));
+const Dashboard = lazy(() => import("./pages/dashboard"));
+const Profile = lazy(() => import("./pages/profile"));
+const NotFound = lazy(() => import("./pages/not-found"));
 
-  const user = useAuthListener();
+function App() {
+  const { user } = useAuthListener();
 
   return (
     <UserContext.Provider value={{ user }}>
@@ -26,13 +27,7 @@ function App() {
             >
               <Login />
             </IsUserLoggedIn>
-            <IsUserLoggedIn
-              user={user}
-              path={ROUTES.SIGN_UP}
-              redirectPath={ROUTES.DASHBOARD}
-            >
-              <SignUp />
-            </IsUserLoggedIn>
+            <Route path={ROUTES.SIGN_UP} component={SignUp} />
 
             <ProtectedRoute
               user={user}
@@ -42,6 +37,7 @@ function App() {
             >
               <Dashboard />
             </ProtectedRoute>
+            <Route path={ROUTES.PROFILE} component={Profile}></Route>
             <Route component={NotFound}></Route>
           </Switch>
         </Suspense>
