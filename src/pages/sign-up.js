@@ -38,9 +38,8 @@ function SignUp() {
           emailAddress: email,
           dateCreated: Date.now(),
         });
-        setTimeout(() => {
-          history.push(ROUTES.DASHBOARD);
-        }, 500);
+        history.push(ROUTES.DASHBOARD);
+        
       } catch (error) {
         setUsername("");
         setFullName("");
