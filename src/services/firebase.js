@@ -115,18 +115,4 @@ export async function getUserPhotosbyUserId(userId) {
     docId: photo.id,
   }));
 }
-/*
-export async function isUserFollowingProfile(userId, profileId) {
-  const result = await firebase
-    .firestore()
-    .collection("users")
-    .where("userId", "==", userId)
-    .where("following", "array-contains", profileId)
-    .get();
 
-  const [response = {}] = result.docs.map((item) => ({
-    ...item.data(),
-    docId: item.id(),
-  }));
-}
-*/
